@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import cls from './app.module.scss'
 import Register from './components/register/register'
@@ -7,6 +7,18 @@ import Home from './components/home/home'
 import UserInfos from './components/user-infos/user-infos'
 
 function App() {
+  const [state, setState] = useState({
+    user: {},
+  })
+
+  const userData = (data: { password: string; email: string }) => {
+    setState({ ...state, user: data })
+  }
+
+  setTimeout(() => {
+    console.log(state)
+  }, 100)
+
   return (
     <div className={cls.wrapper}>
       <div className={cls.container}>

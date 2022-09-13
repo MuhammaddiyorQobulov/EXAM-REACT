@@ -13,15 +13,11 @@ const Login: React.FC<LoginProps> = () => {
   const [state, setState] = useState({
     email: '',
     password: '',
-    errors: {
-      email: '',
-      password: '',
-    },
+    errors: { email: '', password: '' },
   })
 
-  const onChange = async (e: any) => {
-    await setState({ ...state, [e.current?.name]: e.current?.value })
-
+  const onChange = (e: any) => {
+    setState({ ...state, [e.current?.name]: e.current?.value })
     schema
       .validate({
         email: state.email,
@@ -36,17 +32,22 @@ const Login: React.FC<LoginProps> = () => {
         })
       })
       .catch((error: any) => {
+        console.log(JSON.parse(JSON.stringify(error)))
         setState({
           ...state,
-          errors: { ...state.errors, [e.current?.name]: error.message },
+          errors: { ...state.errors, [error.path]: error.message },
         })
       })
   }
 
   const onSubmit = (e: any) => {
     e.preventDefault()
-    console.log('submitted', state)
-    setState({ email: '', password: '', errors: { email: '', password: '' } })
+    if (state.errors.email === '' && state.errors.password === '') {
+      setState({ email: '', password: '', errors: { email: '', password: '' } })
+      return { email: state.email, password: state.password }
+    } else {
+      console.log('------------------------')
+    }
   }
 
   return (
@@ -71,10 +72,9 @@ const Login: React.FC<LoginProps> = () => {
             ref={emailRef}
             onChange={() => onChange(emailRef)}
             defaultValue={state.email}
+            required
           />
-          {/* {state.errors.email.trim() !== '' &&
-           } */}
-          <p>{state.errors.email}</p>
+          {state.errors.email !== '' && <p>{state.errors.email}</p>}
         </div>
         <div className={cls.input}>
           <label htmlFor="password">
@@ -88,10 +88,9 @@ const Login: React.FC<LoginProps> = () => {
             ref={passwordRef}
             defaultValue={state.password}
             onChange={() => onChange(passwordRef)}
+            required
           />
-          {/* {state.errors.password.trim() !== '' && (
-              )} */}
-          <p>{state.errors.password}</p>
+          {state.errors.password !== '' && <p>{state.errors.password}</p>}
         </div>
         <button className={cls['submit-btn']}>
           <h4>Login</h4>
