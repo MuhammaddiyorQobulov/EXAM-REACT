@@ -4,9 +4,11 @@ import cls from './login.module.scss'
 // import {} from 'yup'
 import { schema } from '../../services/validation'
 
-interface LoginProps {}
+interface LoginProps {
+  userData: (data: { email: string; password: string }) => void
+}
 
-const Login: React.FC<LoginProps> = () => {
+const Login: React.FC<LoginProps> = ({ userData }) => {
   const emailRef = React.useRef<HTMLInputElement>(null)
   const passwordRef = React.useRef<HTMLInputElement>(null)
 
@@ -44,9 +46,7 @@ const Login: React.FC<LoginProps> = () => {
     e.preventDefault()
     if (state.errors.email === '' && state.errors.password === '') {
       setState({ email: '', password: '', errors: { email: '', password: '' } })
-      return { email: state.email, password: state.password }
-    } else {
-      console.log('------------------------')
+      userData({ email: state.email, password: state.password })
     }
   }
 
