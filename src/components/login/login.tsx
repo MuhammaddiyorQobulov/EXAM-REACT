@@ -20,26 +20,20 @@ const Login: React.FC<LoginProps> = ({ userData }) => {
 
   const onChange = (e: any) => {
     setState({ ...state, [e.current?.name]: e.current?.value })
-    schema
-      .validate({
+
+    try {
+      schema.validate({
         email: state.email,
         password: state.password,
       })
-      .then(() => {
-        console.log('SUCCESS')
-        setState({
-          ...state,
-          [e.current?.name]: e.current?.value,
-          errors: { email: '', password: '' },
-        })
+      console.log('wklegnoweng')
+    } catch (err:any) {
+      console.log(JSON.parse(JSON.stringify(err)))
+      setState({
+        ...state,
+        errors: { ...state.errors, [err.path]: err.message },
       })
-      .catch((error: any) => {
-        console.log(JSON.parse(JSON.stringify(error)))
-        setState({
-          ...state,
-          errors: { ...state.errors, [error.path]: error.message },
-        })
-      })
+    }
   }
 
   const onSubmit = (e: any) => {

@@ -8,11 +8,11 @@ import UserInfos from './components/user-infos/user-infos'
 
 function App() {
   const [state, setState] = useState({
-    user: {},
+    users: {},
   })
 
   const userData = (data: { password: string; email: string }) => {
-    setState({ ...state, user: data })
+    setState({ ...state, users: data })
   }
 
   setTimeout(() => {
@@ -31,7 +31,7 @@ function App() {
           <Route
             exact
             path="/login"
-            component={(props: any) => <Login {...props} />}
+            component={(props: any) => <Login userData={userData} {...props} />}
           />
           <Route
             exact
