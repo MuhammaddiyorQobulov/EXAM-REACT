@@ -1,0 +1,33 @@
+.home {
+  background-color: #fff;
+  width: 700px;
+  height: 380px;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 40px;
+  h1 {
+    font-size: 50px;
+    
+  }
+  &--btns {
+    display: flex;
+    gap: 20px;
+    border-radius: 10px;
+    button {
+      width: 200px;
+      height: 60px;
+      font-size: 20px;
+      border: none;
+      border-radius: 40px;
+      background: linear-gradient(to right, #26addd, #3fe297);
+      color: #fff;
+    }
+  }
+  p {
+    font-weight: 700;
+  }
+}
